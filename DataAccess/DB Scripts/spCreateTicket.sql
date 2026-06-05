@@ -1,0 +1,21 @@
+USE [cenfocinemas-db]
+GO
+/****** Object:  StoredProcedure [dbo].[CRE_TICKET_PR]    Script Date: 04/06/2026 10:52:00 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[CRE_TICKET_PR]
+(
+	@P_PRICE DECIMAL(10,2),
+	@P_SCHEDULE NVARCHAR(20),
+	@P_DATE DATETIME,
+	@P_TYPE NVARCHAR(20),
+	@P_MOVIE_ID INT,
+	@P_STATUS NVARCHAR(2)
+)
+AS
+BEGIN
+	INSERT INTO tblTickets (Created, Price, Schedule, Date, Type, MovieId, Status)
+	VALUES (GETDATE(), @P_PRICE, @P_SCHEDULE, @P_DATE, @P_TYPE, @P_MOVIE_ID, @P_STATUS);
+END

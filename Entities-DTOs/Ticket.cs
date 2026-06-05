@@ -11,5 +11,6 @@ namespace Entities_DTOs
         public DateTime Date { get; set; }
         public string Type { get; set; } // Adult, Kids
         public Movie Movie { get; set; }
+        public string Status { get; set; }
     }
 }

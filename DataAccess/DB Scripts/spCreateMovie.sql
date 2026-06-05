@@ -1,0 +1,22 @@
+USE [cenfocinemas-db]
+GO
+/****** Object:  StoredProcedure [dbo].[CRE_MOVIE_PR]    Script Date: 04/06/2026 10:51:57 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[CRE_MOVIE_PR]
+(
+	@P_TITLE NVARCHAR(100),
+	@P_SINOPSIS NVARCHAR(500),
+	@P_GENRE NVARCHAR(20),
+	@P_DURATION INT,
+	@P_CLASSIFICATION NVARCHAR(20),
+	@P_IMAGE NVARCHAR(255),
+	@P_STATUS NVARCHAR(2)
+)
+AS
+BEGIN
+	INSERT INTO tblMovies (Created, Title, Sinopsis, Genre, Duration, Classification, Image, Status)
+	VALUES (GETDATE(), @P_TITLE, @P_SINOPSIS, @P_GENRE, @P_DURATION, @P_CLASSIFICATION, @P_IMAGE, @P_STATUS);
+END
