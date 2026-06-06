@@ -1,4 +1,6 @@
-﻿using DataAccess.DAO;
+﻿using DataAccess.CRUD;
+using DataAccess.DAO;
+using Entities_DTOs;
 
 namespace ConsoleApp_Test.Menus;
 
@@ -80,17 +82,17 @@ public static class MovieMenu
         Console.WriteLine("Ingrese la imagen:");
         var image = Console.ReadLine();
 
-        sqlOperation.ProcedureName = "CRE_MOVIE_PR";
+        var movieDTO = new Movie();
+        movieDTO.Title = title;
+        movieDTO.Sinopsis = sinopsis;
+        movieDTO.Genre = genre;
+        movieDTO.Duration = duration;
+        movieDTO.Classification = classification;
+        movieDTO.Image = image;
+        movieDTO.Status = "AC";
 
-        sqlOperation.AddStringParameter("P_TITLE", title);
-        sqlOperation.AddStringParameter("P_SINOPSIS", sinopsis);
-        sqlOperation.AddStringParameter("P_GENRE", genre);
-        sqlOperation.AddIntParameter("P_DURATION", duration);
-        sqlOperation.AddStringParameter("P_CLASSIFICATION", classification);
-        sqlOperation.AddStringParameter("P_IMAGE", image);
-        sqlOperation.AddStringParameter("P_STATUS", "AC");
-
-        sqlDao.ExecuteProcedure(sqlOperation);
+        var mCrud = new MovieCrudFactory();
+        mCrud.Create(movieDTO);
 
         Console.WriteLine("Película registrada correctamente.");
     }

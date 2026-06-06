@@ -10,7 +10,7 @@ namespace Entities_DTOs
         public string Schedule { get; set; }
         public DateTime Date { get; set; }
         public string Type { get; set; } // Adult, Kids
-        public Movie Movie { get; set; }
+        public int MovieId { get; set; }
         public string Status { get; set; }
     }
 }

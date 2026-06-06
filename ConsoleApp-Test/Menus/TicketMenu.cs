@@ -1,4 +1,6 @@
-﻿using DataAccess.DAO;
+﻿using DataAccess.CRUD;
+using DataAccess.DAO;
+using Entities_DTOs;
 
 namespace ConsoleApp_Test.Menus;
 
@@ -77,16 +79,16 @@ public static class TicketMenu
         Console.WriteLine("Ingrese el Id de la pelicula:");
         var movieId = int.Parse(Console.ReadLine());
 
-        sqlOperation.ProcedureName = "CRE_TICKET_PR";
+        var ticketDTO = new Ticket();
+        ticketDTO.Price = price;
+        ticketDTO.Schedule = schedule;
+        ticketDTO.Date = date;
+        ticketDTO.Type = type;
+        ticketDTO.MovieId = movieId;
+        ticketDTO.Status = "AC";
 
-        sqlOperation.AddDecimalParameter("P_PRICE", price);
-        sqlOperation.AddStringParameter("P_SCHEDULE", schedule);
-        sqlOperation.AddDateTimeParameter("P_DATE", date);
-        sqlOperation.AddStringParameter("P_TYPE", type);
-        sqlOperation.AddIntParameter("P_MOVIE_ID", movieId);
-        sqlOperation.AddStringParameter("P_STATUS", "AC");
-
-        sqlDao.ExecuteProcedure(sqlOperation);
+        var tCrud = new TicketCrudFactory();
+        tCrud.Create(ticketDTO);
 
         Console.WriteLine("Ticket registrado correctamente.");
     }

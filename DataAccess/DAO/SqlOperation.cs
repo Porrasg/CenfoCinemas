@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Entities_DTOs;
 using Microsoft.Data.SqlClient;
 
 namespace DataAccess.DAO
@@ -41,5 +42,7 @@ namespace DataAccess.DAO
         {
             Parameters.Add(new SqlParameter(parameterName, value));
         }
+
+       
     }
 }
