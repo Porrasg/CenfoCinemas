@@ -113,20 +113,17 @@ public static class TicketMenu
         Console.WriteLine("Ingrese el nuevo Id de la película:");
         var movieId = int.Parse(Console.ReadLine());
 
-        var sqlDao = SqlDao.GetInstance();
-        var sqlOperation = new SqlOperation();
+        var ticketDTO = new Ticket();
+        ticketDTO.Id = id;
+        ticketDTO.Price = price;
+        ticketDTO.Schedule = schedule;
+        ticketDTO.Date = date;
+        ticketDTO.Type = type;
+        ticketDTO.MovieId = movieId;
+        ticketDTO.Status = "AC";
 
-        sqlOperation.ProcedureName = "UPD_TICKET_PR";
-
-        sqlOperation.AddIntParameter("P_ID", id);
-        sqlOperation.AddDecimalParameter("P_PRICE", price);
-        sqlOperation.AddStringParameter("P_SCHEDULE", schedule);
-        sqlOperation.AddDateTimeParameter("P_DATE", date);
-        sqlOperation.AddStringParameter("P_TYPE", type);
-        sqlOperation.AddIntParameter("P_MOVIE_ID", movieId);
-        sqlOperation.AddStringParameter("P_STATUS", "AC");
-
-        sqlDao.ExecuteProcedure(sqlOperation);
+        var tCrud = new TicketCrudFactory();
+        tCrud.Update(ticketDTO);
 
         Console.WriteLine("Ticket actualizado correctamente.");
     }

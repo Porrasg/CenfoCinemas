@@ -118,21 +118,18 @@ public static class UserMenu
         Console.WriteLine("Ingrese el telefono:");
         var phone = int.Parse(Console.ReadLine());
 
-        var sqlDao = SqlDao.GetInstance();
-        var sqlOperation = new SqlOperation();
+        var userDTO = new User();
+        userDTO.Id = id;
+        userDTO.UserCode = userCode;
+        userDTO.Name = name;
+        userDTO.Email = email;
+        userDTO.Password = pwd;
+        userDTO.BirthDate = birthDate;
+        userDTO.Status = "AC";
+        userDTO.PhoneNumber = phone;
 
-        sqlOperation.ProcedureName = "UPD_USER_PR";
-
-        sqlOperation.AddIntParameter("P_ID", id);
-        sqlOperation.AddStringParameter("P_USER_CODE", userCode);
-        sqlOperation.AddStringParameter("P_NAME", name);
-        sqlOperation.AddStringParameter("P_EMAIL", email);
-        sqlOperation.AddStringParameter("P_PASSWORD", pwd);
-        sqlOperation.AddDateTimeParameter("P_BIRTH_DATE", birthDate);
-        sqlOperation.AddStringParameter("P_STATUS", "AC");
-        sqlOperation.AddIntParameter("P_PHONE_NUMBER", phone);
-
-        sqlDao.ExecuteProcedure(sqlOperation);
+        var uCrud = new UserCrudFactory();
+        uCrud.Update(userDTO);
 
         Console.WriteLine("Usuario actualizado correctamente.");
     }

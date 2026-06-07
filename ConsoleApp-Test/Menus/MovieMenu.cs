@@ -123,18 +123,18 @@ public static class MovieMenu
         var sqlDao = SqlDao.GetInstance();
         var sqlOperation = new SqlOperation();
 
-        sqlOperation.ProcedureName = "UPD_MOVIE_PR";
+        var movieDTO = new Movie();
+        movieDTO.Id = id;
+        movieDTO.Title = title;
+        movieDTO.Sinopsis = sinopsis;
+        movieDTO.Genre = genre;
+        movieDTO.Duration = duration;
+        movieDTO.Classification = classification;
+        movieDTO.Image = image;
+        movieDTO.Status = "AC";
 
-        sqlOperation.AddIntParameter("P_ID", id);
-        sqlOperation.AddStringParameter("P_TITLE", title);
-        sqlOperation.AddStringParameter("P_SINOPSIS", sinopsis);
-        sqlOperation.AddStringParameter("P_GENRE", genre);
-        sqlOperation.AddIntParameter("P_DURATION", duration);
-        sqlOperation.AddStringParameter("P_CLASSIFICATION", classification);
-        sqlOperation.AddStringParameter("P_IMAGE", image);
-        sqlOperation.AddStringParameter("P_STATUS", "AC");
-
-        sqlDao.ExecuteProcedure(sqlOperation);
+        var mCrud = new MovieCrudFactory();
+        mCrud.Update(movieDTO);
 
         Console.WriteLine("Película actualizada correctamente.");
     }

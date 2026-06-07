@@ -51,7 +51,20 @@ namespace DataAccess.CRUD
 
         public override void Update(BaseDTO baseDTO)
         {
-            throw new NotImplementedException();
+            var ticket = baseDTO as Ticket;
+
+            var sqlOperation = new SqlOperation();
+            sqlOperation.ProcedureName = "UPD_TICKET_PR";
+
+            sqlOperation.AddIntParameter("P_ID", ticket.Id);
+            sqlOperation.AddDecimalParameter("P_PRICE", ticket.Price);
+            sqlOperation.AddStringParameter("P_SCHEDULE", ticket.Schedule);
+            sqlOperation.AddDateTimeParameter("P_DATE", ticket.Date);
+            sqlOperation.AddStringParameter("P_TYPE", ticket.Type);
+            sqlOperation.AddIntParameter("P_MOVIE_ID", ticket.MovieId);
+            sqlOperation.AddStringParameter("P_STATUS", ticket.Status);
+
+            sqlDao.ExecuteProcedure(sqlOperation);
         }
     }
 }
