@@ -5,7 +5,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[CRE_USER_PR]
+CREATE PROCEDURE [dbo].[CRE_USER_PR]
 (
 	-- Add the parameters for the stored procedure here
 	@P_USER_CODE NVARCHAR(25),
@@ -21,3 +21,4 @@ BEGIN
 	INSERT INTO tblUsers (Created, UserCode, Name, Email, Password, BirthDate, Status, PhoneNumber)
 	values(GETDATE(), @P_USER_CODE, @P_NAME, @P_EMAIL, @P_PASSWORD, @P_BIRTH_DATE, @P_STATUS, @P_PHONE_NUMBER);
 END
+GO

@@ -22,7 +22,7 @@ public static class UserMenu
             Console.WriteLine("2. Actualizar Usuario");
             Console.WriteLine("3. Eliminar Usuario");
             Console.WriteLine("4. Consultar Un Usuario");
-            Console.WriteLine("5. Consultar Usuarios");
+            Console.WriteLine("5. Consultar todos los Usuarios");
             Console.WriteLine("6. Volver");
             Console.Write("\nSeleccione una opción: ");
 
@@ -45,6 +45,7 @@ public static class UserMenu
                 case "4":
                     Console.WriteLine("Pendiente...");
                     break;
+
                 case "5":
                     RetrieveAll();
                     break;

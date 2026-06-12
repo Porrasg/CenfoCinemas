@@ -41,7 +41,23 @@ namespace DataAccess.CRUD
 
         public override List<T> RetrieveAll<T>()
         {
-            throw new NotImplementedException();
+            var lstTickets = new List<T>();
+
+            var operation = new SqlOperation();
+            operation.ProcedureName = "RET_ALL_TICKET_PR";
+
+            var lstResult = sqlDao.ExecuteQueryProcedure(operation);
+
+            if (lstResult.Count > 0)
+            {
+                foreach (var result in lstResult)
+                {
+                    var ticket = BuildTicket(result);
+
+                    lstTickets.Add((T)Convert.ChangeType(ticket, typeof(T)));
+                }
+            }
+            return lstTickets;
         }
 
         public override T RetrieveById<T>(int id)
@@ -66,5 +82,25 @@ namespace DataAccess.CRUD
 
             sqlDao.ExecuteProcedure(sqlOperation);
         }
+
+
+        //Metodo que construye el DTO del usuario a partir de la data que viene en la consulta de la BD
+        private Ticket BuildTicket(Dictionary<string, object> row)
+        {
+            var ticket = new Ticket()
+            {
+                Id = (int)row["Id"],
+                Created = (DateTime)row["Created"],
+                Price = (decimal)row["Price"],
+                Schedule = (string)row["Schedule"],
+                Date = (DateTime)row["Date"],
+                Type = (string)row["Type"],
+                MovieId = (int)row["MovieId"],
+                Status = (string)row["Status"]
+            };
+
+            return ticket;
+        }
+
     }
 }

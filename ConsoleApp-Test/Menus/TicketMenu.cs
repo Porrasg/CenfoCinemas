@@ -1,6 +1,8 @@
-﻿using DataAccess.CRUD;
+﻿using System.Net.Sockets;
+using DataAccess.CRUD;
 using DataAccess.DAO;
 using Entities_DTOs;
+using Newtonsoft.Json;
 
 namespace ConsoleApp_Test.Menus;
 
@@ -19,7 +21,8 @@ public static class TicketMenu
             Console.WriteLine("2. Actualizar Ticket");
             Console.WriteLine("3. Eliminar Ticket");
             Console.WriteLine("4. Consultar Ticket");
-            Console.WriteLine("5. Volver");
+            Console.WriteLine("5. Consultar todos los Ticket");
+            Console.WriteLine("6. Volver");
             Console.Write("\nSeleccione una opción: ");
 
             var opcion = Console.ReadLine();
@@ -43,6 +46,10 @@ public static class TicketMenu
                     break;
 
                 case "5":
+                    RetrieveAll();
+                    break;
+
+                case "6":
                     salir = true;
                     break;
 
@@ -127,4 +134,18 @@ public static class TicketMenu
 
         Console.WriteLine("Ticket actualizado correctamente.");
     }
+
+    private static void RetrieveAll()
+    {
+        Console.WriteLine("Listado de tickets del aplicativo");
+
+        var tCrud = new TicketCrudFactory();
+        var lstTickets = tCrud.RetrieveAll<Ticket>();
+
+        foreach (var ticket in lstTickets)
+        {
+            Console.WriteLine(JsonConvert.SerializeObject(ticket));
+        }
+    }
+
 }

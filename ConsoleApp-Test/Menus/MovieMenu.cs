@@ -1,6 +1,7 @@
 ﻿using DataAccess.CRUD;
 using DataAccess.DAO;
 using Entities_DTOs;
+using Newtonsoft.Json;
 
 namespace ConsoleApp_Test.Menus;
 
@@ -18,8 +19,9 @@ public static class MovieMenu
             Console.WriteLine("1. Crear Película");
             Console.WriteLine("2. Actualizar Película");
             Console.WriteLine("3. Eliminar Película");
-            Console.WriteLine("4. Consultar Película");
-            Console.WriteLine("5. Volver");
+            Console.WriteLine("4. Consultar Una Película");
+            Console.WriteLine("5. Consultar todas las Películas");
+            Console.WriteLine("6. Volver");
             Console.Write("\nSeleccione una opción: ");
 
             var opcion = Console.ReadLine();
@@ -43,6 +45,10 @@ public static class MovieMenu
                     break;
 
                 case "5":
+                    RetrieveAll();
+                    break;
+
+                case "6":
                     salir = true;
                     break;
 
@@ -138,4 +144,17 @@ public static class MovieMenu
 
         Console.WriteLine("Película actualizada correctamente.");
     }
+    private static void RetrieveAll()
+    {
+        Console.WriteLine("Listado de películas del aplicativo");
+
+        var mCrud = new MovieCrudFactory();
+        var lstMovies = mCrud.RetrieveAll<Movie>();
+
+        foreach (var movie in lstMovies)
+        {
+            Console.WriteLine(JsonConvert.SerializeObject(movie));
+        }
+    }
+
 }

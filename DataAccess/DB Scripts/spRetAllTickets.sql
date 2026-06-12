@@ -3,7 +3,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE RET_ALL_USER_PR
+CREATE PROCEDURE RET_ALL_TICKET_PR
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -11,7 +11,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	SELECT Id, Created, UserCode, Name, Email, Password, BirthDate, Status, PhoneNumber
-	FROM tblUsers;
+	SELECT Id, Created, Price, Schedule, Date, Type, MovieId, Status
+	FROM tblTickets;
 END
 GO

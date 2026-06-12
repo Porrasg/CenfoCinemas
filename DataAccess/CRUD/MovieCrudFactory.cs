@@ -41,7 +41,23 @@ namespace DataAccess.CRUD
 
         public override List<T> RetrieveAll<T>()
         {
-            throw new NotImplementedException();
+            var lstMovies = new List<T>();
+
+            var operation = new SqlOperation();
+            operation.ProcedureName = "RET_ALL_MOVIE_PR";
+
+            var lstResult = sqlDao.ExecuteQueryProcedure(operation);
+
+            if (lstResult.Count > 0)
+            {
+                foreach (var result in lstResult)
+                {
+                    var movie = BuildMovie(result);
+
+                    lstMovies.Add((T)Convert.ChangeType(movie, typeof(T)));
+                }
+            }
+            return lstMovies;
         }
 
         public override T RetrieveById<T>(int id)
@@ -67,5 +83,25 @@ namespace DataAccess.CRUD
 
             sqlDao.ExecuteProcedure(sqlOperation);
         }
+
+        //Metodo que construye el DTO del usuario a partir de la data que viene en la consulta de la BD
+        private Movie BuildMovie(Dictionary<string, object> row)
+        {
+            var movie = new Movie()
+            {
+                Id = (int)row["Id"],
+                Created = (DateTime)row["Created"],
+                Title = (string)row["Title"],
+                Sinopsis = (string)row["Sinopsis"],
+                Genre = (string)row["Genre"],
+                Duration = (int)row["Duration"],
+                Classification = (string)row["Classification"],
+                Image = (string)row["Image"],
+                Status = (string)row["Status"]
+            };
+
+            return movie;
+        }
+
     }
 }
