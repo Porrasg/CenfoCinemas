@@ -3,6 +3,7 @@ using System.Xml.Linq;
 using DataAccess.CRUD;
 using DataAccess.DAO;
 using Entities_DTOs;
+using Newtonsoft.Json;
 
 namespace ConsoleApp_Test.Menus;
 
@@ -20,8 +21,9 @@ public static class UserMenu
             Console.WriteLine("1. Crear Usuario");
             Console.WriteLine("2. Actualizar Usuario");
             Console.WriteLine("3. Eliminar Usuario");
-            Console.WriteLine("4. Consultar Usuario");
-            Console.WriteLine("5. Volver");
+            Console.WriteLine("4. Consultar Un Usuario");
+            Console.WriteLine("5. Consultar Usuarios");
+            Console.WriteLine("6. Volver");
             Console.Write("\nSeleccione una opción: ");
 
             var opcion = Console.ReadLine();
@@ -43,8 +45,11 @@ public static class UserMenu
                 case "4":
                     Console.WriteLine("Pendiente...");
                     break;
-
                 case "5":
+                    RetrieveAll();
+                    break;
+
+                case "6":
                     salir = true;
                     break;
             }
@@ -133,4 +138,19 @@ public static class UserMenu
 
         Console.WriteLine("Usuario actualizado correctamente.");
     }
+
+
+    private static void RetrieveAll()
+    {
+        Console.WriteLine("Listado de usuarios del aplicativo");
+
+        var uCrud = new UserCrudFactory();
+        var lstUsers = uCrud.RetrieveAll<User>();
+
+        foreach (var user in lstUsers)
+        {
+            Console.WriteLine(JsonConvert.SerializeObject(user));
+        }    
+    }
+
 }

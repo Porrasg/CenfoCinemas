@@ -42,7 +42,23 @@ namespace DataAccess.CRUD
 
         public override List<T> RetrieveAll<T>()
         {
-            throw new NotImplementedException();
+            var lstUsers = new List<T>();
+
+            var operation = new SqlOperation();
+            operation.ProcedureName = "RET_ALL_USER_PR";
+
+            var lstResult = sqlDao.ExecuteQueryProcedure(operation);
+
+            if (lstResult.Count > 0)
+            {
+                foreach (var result in lstResult)
+                {
+                    var user = BuildUser(result);
+
+                    lstUsers.Add((T)Convert.ChangeType(user, typeof(T)));
+                }
+            }
+            return lstUsers;
         }
 
         public override T RetrieveById<T>(int id)
@@ -68,5 +84,24 @@ namespace DataAccess.CRUD
 
             sqlDao.ExecuteProcedure(sqlOperation);
         }
+
+        //Metodo que construye el DTO del usuario a partir de la data que viene en la consulta de la BD
+        private User BuildUser(Dictionary<string, object> row)
+        {
+            var user = new User()
+            {
+                Id = (int)row["Id"],
+                Created = (DateTime)row["Created"],
+                UserCode = (string)row["UserCode"],
+                Name = (string)row["Name"],
+                Email = (string)row["Email"],
+                Password = (string)row["Password"],
+                BirthDate = (DateTime)row["BirthDate"],
+                Status = (string)row["Status"],
+                PhoneNumber = (int)row["PhoneNumber"]
+            };
+            return user;
+        }
+        
     }
 }

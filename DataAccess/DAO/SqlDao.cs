@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using Microsoft.Data.SqlClient;
 
@@ -60,5 +61,48 @@ namespace DataAccess.DAO
             }
         }
 
+
+        // Metodo para ejecutar SP en la base de datos y obtener un resultado de respuesta
+        public List<Dictionary<string, object>> ExecuteQueryProcedure(SqlOperation sqlOperation)
+        {
+            var lstResults = new List<Dictionary<string, object>>();
+
+            using (var conn = new SqlConnection(connectionString))
+            {
+                using (var command = new SqlCommand(sqlOperation.ProcedureName, conn)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                })
+                {
+                    // Set de los parametros que utiliza el SP
+                    foreach (var param in sqlOperation.Parameters)
+                    {
+                        command.Parameters.Add(param);
+                    }
+                    //Ejecuta el SP
+                    conn.Open();
+                    //Ejecucion del SP con retorno de datos
+                    var reader = command.ExecuteReader();
+
+                    //Lectura del data set
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var row = new Dictionary<string, object>();
+                            for (var index = 0; index < reader.FieldCount; index++)
+                            {
+                                var key = reader.GetName(index);
+                                var value = reader.GetValue(index);
+
+                                row[key] = value;
+                            }
+                            lstResults.Add(row);
+                        }
+                    }
+                }
+            }
+            return lstResults;
+        }
     }
 }
