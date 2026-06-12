@@ -39,11 +39,11 @@ public static class UserMenu
                     break;
 
                 case "3":
-                    Console.WriteLine("Pendiente...");
+                    DeleteUser();
                     break;
 
                 case "4":
-                    Console.WriteLine("Pendiente...");
+                    RetrieveById();
                     break;
 
                 case "5":
@@ -63,9 +63,11 @@ public static class UserMenu
         }
     }
 
+    // Metodos para cada una de las opciones del menu
+    //Metodo para crear un usuario
     private static void CreateUser()
     {
-
+        //Solicitamos al usuario que ingrese los datos necesarios para crear un nuevo usuario
         Console.WriteLine("Ingrese el codigo de usuario:");
         var userCode = Console.ReadLine();
 
@@ -86,6 +88,7 @@ public static class UserMenu
         Console.WriteLine("Ingrese el telefono:");
         var phone = int.Parse(Console.ReadLine());
 
+        // Creamos un objeto UserDTO con los datos ingresados por el usuario
         var userDTO = new User();
         userDTO.UserCode = userCode;
         userDTO.Name = name;
@@ -95,14 +98,17 @@ public static class UserMenu
         userDTO.Status = status;
         userDTO.PhoneNumber = phone;
 
+        // Instanciamos el UserCrudFactory y llamamos al metodo Create para registrar el nuevo usuario en la base de datos
         var uCrud = new UserCrudFactory();
         uCrud.Create(userDTO);
 
         Console.WriteLine("Usuario registrado correctamente.");
     }
 
+    //Metodo para actualizar un usuario
     private static void UpdateUser()
     {
+        //Solicitamos al usuario que ingrese el ID del usuario a actualizar y los nuevos datos para actualizar el usuario
         Console.WriteLine("Ingrese el ID del usuario:");
         var id = int.Parse(Console.ReadLine());
 
@@ -124,6 +130,7 @@ public static class UserMenu
         Console.WriteLine("Ingrese el telefono:");
         var phone = int.Parse(Console.ReadLine());
 
+        // Creamos un objeto UserDTO con los nuevos datos ingresados por el usuario
         var userDTO = new User();
         userDTO.Id = id;
         userDTO.UserCode = userCode;
@@ -134,23 +141,88 @@ public static class UserMenu
         userDTO.Status = "AC";
         userDTO.PhoneNumber = phone;
 
+        // Instanciamos el UserCrudFactory y llamamos al metodo Update para actualizar el usuario en la base de datos
         var uCrud = new UserCrudFactory();
         uCrud.Update(userDTO);
 
         Console.WriteLine("Usuario actualizado correctamente.");
     }
 
+    //Metodo para eliminar un usuario
+    private static void DeleteUser()
+    {
+        //Solicitamos al usuario que ingrese el ID del usuario a eliminar
+        Console.WriteLine("Ingrese el ID del usuario a eliminar:");
+        var id = int.Parse(Console.ReadLine());
 
+        // Creamos un objeto UserDTO con el ID del usuario a eliminar
+        var userDTO = new User();
+        userDTO.Id = id;
+
+        // Instanciamos el UserCrudFactory y llamamos al metodo Delete para eliminar el usuario de la base de datos
+        var uCrud = new UserCrudFactory();
+        uCrud.Delete(userDTO);
+
+        Console.WriteLine("Usuario eliminado correctamente.");
+    }
+
+    //Metodo para consultar un usuario por ID
+    private static void RetrieveById()
+    {
+        //Solicitamos al usuario que ingrese el ID del usuario a consultar
+        Console.WriteLine("Ingrese el ID del usuario:");
+        var id = int.Parse(Console.ReadLine());
+
+        // Instanciamos el UserCrudFactory y llamamos al metodo RetrieveById para obtener los datos del usuario consultado
+        var uCrud = new UserCrudFactory();
+        var user = uCrud.RetrieveById<User>(id);
+
+        // Mostramos los datos del usuario consultado en formato JSON
+        // Si el usuario no existe, mostramos un mensaje indicando que no se encontró el usuario
+        if (user != null)
+        {
+            //Console.WriteLine(JsonConvert.SerializeObject(user));
+            Console.WriteLine("\n=== INFORMACIÓN DEL USUARIO ===");
+            Console.WriteLine($"ID: {user.Id}");
+            Console.WriteLine($"Created: {user.Created}");
+            Console.WriteLine($"Updated: {user.Updated}");
+            Console.WriteLine($"Código: {user.UserCode}");
+            Console.WriteLine($"Nombre: {user.Name}");
+            Console.WriteLine($"Email: {user.Email}");
+            Console.WriteLine($"Fecha Nacimiento: {user.BirthDate:dd/MM/yyyy}");
+            Console.WriteLine($"Teléfono: {user.PhoneNumber}");
+            Console.WriteLine($"Estado: {user.Status}");
+        }
+        else
+        {
+            Console.WriteLine("Usuario no encontrado.");
+        }
+    }
+
+    //Metodo para consultar todos los usuarios
     private static void RetrieveAll()
     {
         Console.WriteLine("Listado de usuarios del aplicativo");
 
+        //Instanciamos el crud factory y llamamos al metodo RetrieveAll para obtener la lista de usuarios
         var uCrud = new UserCrudFactory();
         var lstUsers = uCrud.RetrieveAll<User>();
 
+        // Mostramos los datos de los usuarios consultadas en formato JSON
         foreach (var user in lstUsers)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(user));
+            //Console.WriteLine(JsonConvert.SerializeObject(user));
+            Console.WriteLine("========================================");
+            Console.WriteLine($"ID: {user.Id}");
+            Console.WriteLine($"Created: {user.Created}");
+            Console.WriteLine($"Updated: {user.Updated}");
+            Console.WriteLine($"Código: {user.UserCode}");
+            Console.WriteLine($"Nombre: {user.Name}");
+            Console.WriteLine($"Email: {user.Email}");
+            Console.WriteLine($"Fecha Nacimiento: {user.BirthDate:dd/MM/yyyy}");
+            Console.WriteLine($"Teléfono: {user.PhoneNumber}");
+            Console.WriteLine($"Estado: {user.Status}");
+            Console.WriteLine("========================================");
         }    
     }
 

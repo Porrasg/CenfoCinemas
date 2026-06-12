@@ -6,15 +6,15 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE RET_ALL_TICKET_PR
+CREATE PROCEDURE DEL_TICKET_PR
+	@P_ID INT
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    -- Insert statements for procedure here
-	SELECT Id, Created, Price, Schedule, Date, Type, MovieId, Status
-	FROM tblTickets;
+    DELETE FROM tblTickets
+    WHERE Id = @P_ID;
 END
 GO

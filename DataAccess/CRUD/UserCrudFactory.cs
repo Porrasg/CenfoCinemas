@@ -37,25 +37,39 @@ namespace DataAccess.CRUD
 
         public override void Delete(BaseDTO baseDTO)
         {
-            throw new NotImplementedException();
+            // Convirtiendo el BaseDTO en un objeto User
+            var user = baseDTO as User;
+
+            // Definir el SP
+            var sqlOperation = new SqlOperation();
+            sqlOperation.ProcedureName = "DEL_USER_PR";
+
+            sqlOperation.AddIntParameter("P_ID", user.Id);
+
+            // Ejecutar el SP
+            sqlDao.ExecuteProcedure(sqlOperation);
         }
 
         public override List<T> RetrieveAll<T>()
         {
+            // Lista que va a contener a todos los usuarios que se obtengan de la consulta a la BD
             var lstUsers = new List<T>();
 
+            // Definir el SP
             var operation = new SqlOperation();
             operation.ProcedureName = "RET_ALL_USER_PR";
 
+            // Ejecutar el SP
             var lstResult = sqlDao.ExecuteQueryProcedure(operation);
 
+            // Recorrer la lista de resultados y convertir cada fila en un objeto User, luego agregarlo a la lista de usuarios
             if (lstResult.Count > 0)
             {
                 foreach (var result in lstResult)
                 {
                     var user = BuildUser(result);
 
-                    lstUsers.Add((T)Convert.ChangeType(user, typeof(T)));
+                    lstUsers.Add((T)Convert.ChangeType(user, typeof(T))); 
                 }
             }
             return lstUsers;
@@ -63,13 +77,33 @@ namespace DataAccess.CRUD
 
         public override T RetrieveById<T>(int id)
         {
-            throw new NotImplementedException();
+            // Definir el SP
+            var operation = new SqlOperation();
+            operation.ProcedureName = "RET_USER_BY_ID_PR";
+
+            operation.AddIntParameter("P_ID", id);
+
+            // Ejecutar el SP
+            var lstResult = sqlDao.ExecuteQueryProcedure(operation);
+
+            // Si se obtiene un resultado, convertir la primera fila en un objeto User y devolverlo, de lo contrario devolver null
+            if (lstResult.Count > 0)
+            {
+                var row = lstResult[0];
+                var user = BuildUser(row);
+
+                return (T)Convert.ChangeType(user, typeof(T));
+            }
+
+            return default(T);
         }
 
         public override void Update(BaseDTO baseDTO)
         {
+            // Convirtiendo el BaseDTO en un objeto User
             var user = baseDTO as User;
 
+            // Definir el SP
             var sqlOperation = new SqlOperation();
             sqlOperation.ProcedureName = "UPD_USER_PR";
 
@@ -82,12 +116,14 @@ namespace DataAccess.CRUD
             sqlOperation.AddStringParameter("P_STATUS", user.Status);
             sqlOperation.AddIntParameter("P_PHONE_NUMBER", user.PhoneNumber);
 
+            // Ejecutar el SP
             sqlDao.ExecuteProcedure(sqlOperation);
         }
 
         //Metodo que construye el DTO del usuario a partir de la data que viene en la consulta de la BD
         private User BuildUser(Dictionary<string, object> row)
         {
+            // Crea un nuevo objeto User y asigna sus propiedades a partir de los valores del diccionario
             var user = new User()
             {
                 Id = (int)row["Id"],
