@@ -10,4 +10,9 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.8" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CoreApp\CoreApp.csproj" />
+    <ProjectReference Include="..\Entities-DTOs\Entities-DTOs.csproj" />
+  </ItemGroup>
+
 </Project>
