@@ -15,5 +15,10 @@ namespace CoreApp
             return uCrud.RetrieveAll<User>();
         }
 
+        public void Create(User u)
+        {
+            var uCrud = new UserCrudFactory();
+            uCrud.Create(u);
+        }
     }
 }

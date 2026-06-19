@@ -7,7 +7,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class MoviesController : ControllerBase
     {
         [HttpGet]
         [Route("RetrieveAll")]
@@ -15,8 +15,8 @@ namespace WebAPI.Controllers
         {
             try
             {
-                var um = new UserManager();
-                var lstResults = um.RetrieveAllUsers();
+                var mm = new MovieManager();
+                var lstResults = mm.RetrieveAllMovies();
                 return Ok(lstResults);
             }
             catch (Exception ex)
@@ -27,20 +27,19 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("Create")]
-        public ActionResult Create(User user)
+        public ActionResult Create(Movie movie)
         {
-            try 
+            try
             {
-                var um = new UserManager();
-                um.Create(user);
+                var mm = new MovieManager();
+                mm.Create(movie);
 
-                return Ok(user);
+                return Ok(movie);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }
-                
         }
     }
 }
