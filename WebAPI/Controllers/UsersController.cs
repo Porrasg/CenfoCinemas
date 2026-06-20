@@ -42,5 +42,40 @@ namespace WebAPI.Controllers
             }
                 
         }
+
+        [HttpPut]
+        [Route("Update")]
+        public ActionResult Update(User user)
+        {
+            try
+            {
+                var um = new UserManager();
+                um.Update(user);
+
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("Delete")]
+        public ActionResult Delete(User user)
+        {
+            try
+            {
+                var um = new UserManager();
+                um.Delete(user);
+
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
     }
 }
