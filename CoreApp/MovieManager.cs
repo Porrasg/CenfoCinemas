@@ -25,7 +25,7 @@ namespace CoreApp
                 throw new Exception("Todos los campos son obligatorios");
 
             if (!IsValidDuration(m))
-                throw new Exception("La duracion debe ser mayor a 0");
+                throw new Exception("La duracion debe ser mayor a 60 minutos");
 
             if (!IsValidStatus(m))
                 throw new Exception("Estado invalido (Ac o In)");
@@ -48,7 +48,7 @@ namespace CoreApp
                 throw new Exception("Todos los campos son obligatorios");
 
             if (!IsValidDuration(m))
-                throw new Exception("La duracion debe ser mayor a 0");
+                throw new Exception("La duracion debe ser mayor a 60 minutos");
 
             if (!IsValidStatus(m))
                 throw new Exception("Estado invalido (Ac o In)");
