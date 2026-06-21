@@ -25,15 +25,18 @@ namespace CoreApp
                 throw new Exception("Todos los campos son obligatorios");
 
             if (!IsValidDuration(m))
-                throw new Exception("La duracion debe ser mayor a 60 minutos");
+                throw new Exception("La duración debe ser un número positivo");
 
             if (!IsValidStatus(m))
-                throw new Exception("Estado inválido. Valores permitidos: Activo (Ac) o Inactivo (In)");
+                throw new Exception("Estado inválido. Valores permitidos: Ac o In");
 
-            // Validacion de negocio
+            // Validaciones de negocio
+
+            if (!HasMinimumDuration(m))
+                throw new Exception("La película debe tener una duración mínima de 60 minutos");
 
             if (MovieExists(m))
-                throw new Exception("La pelicula ya existe");
+                throw new Exception("La película ya existe");
 
             mCrud.Create(m);
         }
@@ -48,15 +51,18 @@ namespace CoreApp
                 throw new Exception("Todos los campos son obligatorios");
 
             if (!IsValidDuration(m))
-                throw new Exception("La duracion debe ser mayor a 60 minutos");
+                throw new Exception("La duración debe ser un número positivo");
 
             if (!IsValidStatus(m))
-                throw new Exception("Estado inválido. Valores permitidos: Activo (Ac) o Inactivo (In)");
+                throw new Exception("Estado inválido. Valores permitidos: Ac o In");
 
-            // Validacion de negocio
+            // Validaciones de negocio
+
+            if (!HasMinimumDuration(m))
+                throw new Exception("La película debe tener una duración mínima de 60 minutos");
 
             if (MovieExists(m))
-                throw new Exception("Ya existe otra pelicula con ese nombre");
+                throw new Exception("Ya existe otra película con ese nombre");
 
             mCrud.Update(m);
         }
@@ -84,7 +90,7 @@ namespace CoreApp
         // Validar que la duración sea un número positivo
         private bool IsValidDuration(Movie movie)
         {
-            return movie.Duration >= 60;
+            return movie.Duration > 0;
         }
 
         // Validar que el estado sea "Ac" o "In"
@@ -94,6 +100,12 @@ namespace CoreApp
         }
 
         // Validacion de negocio
+
+        // Validar que la película tenga una duración mínima de 60 minutos
+        private bool HasMinimumDuration(Movie movie)
+        {
+            return movie.Duration >= 60;
+        }
 
         // Validar que no exista una película con el mismo título o nombre
         private bool MovieExists(Movie m)
