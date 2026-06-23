@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using DataAccess.CRUD;
 using Entities_DTOs;
 
@@ -136,9 +137,7 @@ namespace CoreApp
         // Verificar que el correo electrónico tenga un formato válido
         private bool IsValidEmail(User user)
         {
-            return !string.IsNullOrWhiteSpace(user.Email)
-                   && user.Email.Contains("@")
-                   && user.Email.Contains(".");
+            return Regex.IsMatch(user.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
         }
 
         // Verificar que la contraseña tenga al menos 6 caracteres
