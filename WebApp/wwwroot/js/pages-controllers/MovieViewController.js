@@ -12,6 +12,25 @@ function MovieViewController() {
     this.InitView = function () {
         //Invocar la carga de la tabla
         this.LoadTable();
+
+        // Asignar evento al boton de crear
+        $('#btnCreate').on('click', function () {
+            var vc = new MovieViewController();
+            vc.Create();
+        })
+
+        // Asignar evento al boton de update
+        $('#btnUpdate').on('click', function () {
+            var vc = new MovieViewController();
+            vc.Update();
+        })
+
+        // Asignar evento al boton de eliminar
+        $('#btnDelete').on('click', function () {
+            var vc = new MovieViewController();
+            vc.Delete();
+        })
+
     }
 
     // metodo de carga de la tabla
@@ -45,7 +64,71 @@ function MovieViewController() {
             },
             "columns": columns
         });
+
+        // ASIGNAR EVENTO DE MAPEO DEL DTO SELECCIONADO CON EL FORM
+        $('#tblMovies tbody').on('click', 'tr', function () {
+
+            var row = $(this).closest('tr');
+
+            // vamos a extraer el dto
+            var movieDTO = $('#tblMovies').DataTable().row(row).data();
+
+            //cargamos el DTO en el form
+            $('#txtId').val(movieDTO.id);
+            $('#txtTitle').val(movieDTO.title);
+            $('#txtSinopsis').val(movieDTO.sinopsis);
+            $('#txtGenre').val(movieDTO.genre);
+            $('#txtDuration').val(movieDTO.duration);
+            $('#txtClassification').val(movieDTO.classification);
+            $('#txtImage').val(movieDTO.image);
+            $('#txtStatus').val(movieDTO.status);
+
+        });
     }
+
+    // Limpiar el formulario
+    this.ClearForm = function () {
+        $('#txtId').val('');
+        $('#txtTitle').val('');
+        $('#txtSinopsis').val('');
+        $('#txtGenre').val('');
+        $('#txtDuration').val('');
+        $('#txtClassification').val('');
+        $('#txtImage').val('');
+        $('#txtStatus').val('');
+    }
+
+    this.Create = function () {
+        var movieDTO = {};
+
+        //Set con valores default
+        movieDTO.id = 0;
+        movieDTO.created = "2026-01-01";
+        movieDTO.updated = "2026-01-01";
+
+        // Set de valores capturados en el form/pantalla
+        movieDTO.title = $('#txtTitle').val();
+        movieDTO.sinopsis = $('#txtSinopsis').val();
+        movieDTO.genre = $('#txtGenre').val();
+        movieDTO.duration = $('#txtDuration').val();
+        movieDTO.classification = $('#txtClassification').val();
+        movieDTO.image = $('#txtImage').val();
+        movieDTO.status = $('#txtStatus').val();
+
+        // Enviar data al API
+        var ca = new ControlActions();
+        var urlEndpoint = this.API_ControllerName + "/Create";
+
+        ca.PostToAPI(urlEndpoint, movieDTO, function (response) {
+
+            //Recargar la tabla
+            $('#tblMovies').DataTable().ajax.reload();
+
+            // Limpiar el formulario
+            vc.ClearForm();
+        })
+    }
+
 }
 
 // Instancia de la clase

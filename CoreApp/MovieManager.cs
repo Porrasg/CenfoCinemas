@@ -28,7 +28,7 @@ namespace CoreApp
                 throw new Exception("La duración debe ser un número positivo");
 
             if (!IsValidStatus(m))
-                throw new Exception("Estado inválido. Valores permitidos: Ac o In");
+                throw new Exception("Estado inválido. Valores permitidos: Activo (AC) o Inactivo (IN)");
 
             // Validaciones de negocio
 
@@ -54,7 +54,7 @@ namespace CoreApp
                 throw new Exception("La duración debe ser un número positivo");
 
             if (!IsValidStatus(m))
-                throw new Exception("Estado inválido. Valores permitidos: Ac o In");
+                throw new Exception("Estado inválido. Valores permitidos: Activo (AC) o Inactivo (IN)");
 
             // Validaciones de negocio
 
@@ -93,10 +93,10 @@ namespace CoreApp
             return movie.Duration > 0;
         }
 
-        // Validar que el estado sea "Ac" o "In"
+        // Validar que el estado sea "AC" o "IN"
         private bool IsValidStatus(Movie movie)
         {
-            return movie.Status.ToUpper() == "AC" || movie.Status.ToUpper() == "IN";
+            return movie.Status == "AC" || movie.Status == "IN";
         }
 
         // Validacion de negocio

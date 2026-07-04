@@ -22,4 +22,51 @@
             </table>
         </div>
     </div>
+    <div class="row">
+        <div class="cols-lg-6">
+            <div class="bs-component">
+                <form>
+                    <fieldset>
+                        <legend>Edicion</legend>
+                        <div class="form-group">
+                            <label for="txtId" class="form-label mt-4">Id</label>
+                            <input id="txtId" readonly type="number" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtPrice" class="form-label mt-4">Price</label>
+                            <input id="txtPrice" type="number" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtSchedule" class="form-label mt-4">Schedule</label>
+                            <input id="txtSchedule" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtDate" class="form-label mt-4">Date</label>
+                            <input id="txtDate" type="date" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtType" class="form-label mt-4">Type</label>
+                            <input id="txtType" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtMovieId" class="form-label mt-4">MovieId</label>
+                            <input id="txtMovieId" type="number" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtStatus" class="form-label mt-4">Status</label>
+                            <select id="txtStatus" class="form-control">
+                                <option value="">Seleccione...</option>
+                                <option value="AC">AC - Activa</option>
+                                <option value="IN">IN - Inactiva</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                </form>
+                <br />
+                <button id="btnCreate" class="btn btn-primary btn-xs">Create</button>
+                <button id="btnUpdate" class="btn btn-secondary btn-xs">Update</button>
+                <button id="btnDelete" class="btn btn-danger btn-xs">Delete</button>
+            </div>
+        </div>
+    </div>
 </div>

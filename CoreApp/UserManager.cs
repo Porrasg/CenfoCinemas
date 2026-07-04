@@ -43,7 +43,7 @@ namespace CoreApp
                 throw new Exception("Usuario no cumple con la edad minima para el registro");
 
             if (!IsValidStatus(u))
-                throw new Exception("Estado inválido. Valores permitidos: Activo (Ac) o Inactivo (In)");
+                throw new Exception("Estado inválido. Valores permitidos: Activo (AC) o Inactivo (IN)");
 
             if (EmailExists(u))
                 throw new Exception("El correo ya está registrado");
@@ -84,7 +84,7 @@ namespace CoreApp
                 throw new Exception("Usuario no cumple con la edad minima para el registro");
 
             if (!IsValidStatus(u))
-                throw new Exception("Estado inválido. Valores permitidos: Activo (Ac) o Inactivo (In)");
+                throw new Exception("Estado inválido. Valores permitidos: Activo (AC) o Inactivo (IN)");
 
             if (EmailExists(u))
                 throw new Exception("El correo ya está registrado");
@@ -116,10 +116,10 @@ namespace CoreApp
             return age >= 18;
         }
 
-        // Verificar que el estado sea "Ac" o "In"
+        // Validar que el estado sea "AC" o "IN"
         private bool IsValidStatus(User user)
         {
-            return user.Status.ToUpper() == "AC" || user.Status.ToUpper() == "IN";
+            return user.Status == "AC" || user.Status == "IN";
         }
 
         // Validaciones de Forma

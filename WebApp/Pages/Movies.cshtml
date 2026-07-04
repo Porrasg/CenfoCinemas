@@ -23,4 +23,57 @@
             </table>
         </div>
     </div>
+    <div class="row">
+        <div class="cols-lg-6">
+            <div class="bs-component">
+                <form>
+                    <fieldset>
+                        <legend>Edicion</legend>
+                        <div class="form-group">
+                            <label for="txtId" class="form-label mt-4">Id</label>
+                            <input id="txtId" readonly type="number" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtTitle" class="form-label mt-4">Title</label>
+                            <input id="txtTitle" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtSinopsis" class="form-label mt-4">Sinopsis</label>
+                            @* <input id="txtSinopsis" type="text" class="form-control" /> *@
+                            <textarea id="txtSinopsis" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtGenre" class="form-label mt-4">Genre</label>
+                            <input id="txtGenre" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtDuration" class="form-label mt-4">Duration</label>
+                            <input id="txtDuration" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtClassification" class="form-label mt-4">Classification</label>
+                            <input id="txtClassification" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtImage" class="form-label mt-4">Image</label>
+                            <input id="txtImage" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtStatus" class="form-label mt-4">Status</label>
+                            <select id="txtStatus" class="form-control">
+                                <option value="">Seleccione...</option>
+                                <option value="AC">AC - Activa</option>
+                                <option value="IN">IN - Inactiva</option>
+                            </select>
+                        </div>
+                        
+                    </fieldset>
+                </form>
+                <br />
+                <button id="btnCreate" class="btn btn-primary btn-xs">Create</button>
+                <button id="btnUpdate" class="btn btn-secondary btn-xs">Update</button>
+                <button id="btnDelete" class="btn btn-danger btn-xs">Delete</button>
+            </div>
+        </div>
+    </div>
 </div>

@@ -35,7 +35,7 @@ namespace CoreApp
                 throw new Exception("La fecha no puede ser en el pasado");
 
             if (!IsValidStatus(t))
-                throw new Exception("Estado inválido. Valores permitidos: Activo (Ac) o Inactivo (In)");
+                throw new Exception("Estado inválido. Valores permitidos: Activo (AC) o Inactivo (IN)");
 
             // Validaciones de negocio
 
@@ -67,7 +67,7 @@ namespace CoreApp
                 throw new Exception("La fecha no puede ser en el pasado");
 
             if (!IsValidStatus(t))
-                throw new Exception("Estado inválido. Valores permitidos: Activo (Ac) o Inactivo (In)");
+                throw new Exception("Estado inválido. Valores permitidos: Activo (AC) o Inactivo (IN)");
 
             // Validaciones de negocio
 
@@ -112,10 +112,10 @@ namespace CoreApp
             return t.Date >= DateTime.Now.Date; 
         }
 
-        // El estado solo puede ser "Ac" o "In"
-        private bool IsValidStatus(Ticket t)
+        // Validar que el estado sea "AC" o "IN"
+        private bool IsValidStatus(Ticket ticket)
         {
-            return t.Status.ToUpper() == "AC" || t.Status.ToUpper() == "IN";
+            return ticket.Status == "AC" || ticket.Status == "IN";
         }
 
         // Validaciones de negocio
