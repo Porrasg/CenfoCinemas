@@ -129,6 +129,68 @@ function MovieViewController() {
         })
     }
 
+    this.Update = function () {
+        var movieDTO = {};
+
+        //Set con valores default
+        movieDTO.created = "2026-01-01";
+        movieDTO.updated = "2026-01-01";
+
+        // Set de valores capturados en el form/pantalla
+        movieDTO.id = $('#txtId').val();
+        movieDTO.title = $('#txtTitle').val();
+        movieDTO.sinopsis = $('#txtSinopsis').val();
+        movieDTO.genre = $('#txtGenre').val();
+        movieDTO.duration = $('#txtDuration').val();
+        movieDTO.classification = $('#txtClassification').val();
+        movieDTO.image = $('#txtImage').val();
+        movieDTO.status = $('#txtStatus').val();
+
+        // Enviar data al API
+        var ca = new ControlActions();
+        var urlEndpoint = this.API_ControllerName + "/Update";
+
+        ca.PutToAPI(urlEndpoint, movieDTO, function (response) {
+
+            //Recargar la tabla
+            $('#tblMovies').DataTable().ajax.reload();
+
+            // Limpiar el formulario
+            vc.ClearForm();
+        })
+    }
+
+    this.Delete = function () {
+        var movieDTO = {};
+
+        //Set con valores default
+        movieDTO.created = "2026-01-01";
+        movieDTO.updated = "2026-01-01";
+
+        // Set de valores capturados en el form/pantalla
+        movieDTO.id = $('#txtId').val();
+        movieDTO.title = $('#txtTitle').val();
+        movieDTO.sinopsis = $('#txtSinopsis').val();
+        movieDTO.genre = $('#txtGenre').val();
+        movieDTO.duration = $('#txtDuration').val();
+        movieDTO.classification = $('#txtClassification').val();
+        movieDTO.image = $('#txtImage').val();
+        movieDTO.status = $('#txtStatus').val();
+
+        // Enviar data al API
+        var ca = new ControlActions();
+        var urlEndpoint = this.API_ControllerName + "/Delete";
+
+        ca.DeleteToAPI(urlEndpoint, movieDTO, function (response) {
+
+            //Recargar la tabla
+            $('#tblMovies').DataTable().ajax.reload();
+
+            // Limpiar el formulario
+            vc.ClearForm();
+        })
+    }
+
 }
 
 // Instancia de la clase
