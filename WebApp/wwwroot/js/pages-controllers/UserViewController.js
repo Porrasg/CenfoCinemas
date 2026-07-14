@@ -97,8 +97,51 @@ function UserViewController() {
         $('#txtPassword').val('');
     }
 
+    this.ValidateForm = function () {
+
+        if (
+            $('#txtUserCode').val().trim() === "" ||
+            $('#txtName').val().trim() === "" ||
+            $('#txtEmail').val().trim() === "" ||
+            $('#txtBirthDate').val().trim() === "" ||
+            $('#txtStatus').val().trim() === "" ||
+            $('#txtPhoneNumber').val().trim() === "" ||
+            $('#txtPassword').val().trim() === ""
+        ) {
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campos obligatorios',
+                text: 'Todos los campos son obligatorios.'
+            });
+
+            return false;
+        }
+
+        // Validación del correo
+        var emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+        if (!emailRegex.test($('#txtEmail').val())) {
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Correo inválido',
+                text: 'Ingrese un correo electrónico válido.'
+            });
+
+            return false;
+        }
+
+        return true;
+    }
+
 
     this.Create = function () {
+
+        if (!this.ValidateForm()) {
+            return;
+        }
+
         var userDTO = {};
 
         //Set con valores default 
@@ -119,7 +162,16 @@ function UserViewController() {
         var ca = new ControlActions();
         var urlEndpoint = this.API_ControllerName + "/Create";
 
+        var vc = this;
+
         ca.PostToAPI(urlEndpoint, userDTO, function (response) {
+            
+            Swal.fire({
+                icon: 'success',
+                title: '¡Usuario creado!',
+                text: 'El usuario se registró correctamente.'
+            });
+
             //Recargar la tabla
             $('#tblUsers').DataTable().ajax.reload();
 
@@ -130,6 +182,11 @@ function UserViewController() {
 
 
     this.Update = function () {
+
+        if (!this.ValidateForm()) {
+            return;
+        }
+
         var userDTO = {};
 
         //Set con valores default 
@@ -150,7 +207,16 @@ function UserViewController() {
         var ca = new ControlActions();
         var urlEndpoint = this.API_ControllerName + "/Update";
 
+        var vc = this;
+
         ca.PutToAPI(urlEndpoint, userDTO, function (response) {
+
+            Swal.fire({
+                icon: 'success',
+                title: '¡Usuario actualizado!',
+                text: 'Los datos del usuario fueron actualizados correctamente.'
+            });
+
             //Recargar la tabla
             $('#tblUsers').DataTable().ajax.reload();
 
@@ -181,7 +247,16 @@ function UserViewController() {
         var ca = new ControlActions();
         var urlEndpoint = this.API_ControllerName + "/Delete";
 
+        var vc = this;
+
         ca.DeleteToAPI(urlEndpoint, userDTO, function (response) {
+
+            Swal.fire({
+                icon: 'success',
+                title: '¡Usuario eliminado!',
+                text: 'El usuario fue eliminado correctamente.'
+            });
+
             //Recargar la tabla
             $('#tblUsers').DataTable().ajax.reload();
 

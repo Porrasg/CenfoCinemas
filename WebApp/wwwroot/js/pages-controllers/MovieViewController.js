@@ -98,7 +98,49 @@ function MovieViewController() {
         $('#txtStatus').val('');
     }
 
+    this.ValidateForm = function () {
+
+        // Campos obligatorios
+        if (
+            $('#txtTitle').val().trim() === "" ||
+            $('#txtSinopsis').val().trim() === "" ||
+            $('#txtGenre').val().trim() === "" ||
+            $('#txtDuration').val().trim() === "" ||
+            $('#txtClassification').val().trim() === "" ||
+            $('#txtImage').val().trim() === "" ||
+            $('#txtStatus').val().trim() === ""
+        ) {
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campos obligatorios',
+                text: 'Todos los campos son obligatorios.'
+            });
+
+            return false;
+        }
+
+        // Duración positiva
+        if (parseInt($('#txtDuration').val()) <= 0) {
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Duración inválida',
+                text: 'La duración debe ser mayor que cero.'
+            });
+
+            return false;
+        }
+
+        return true;
+    }
+
     this.Create = function () {
+
+        if (!this.ValidateForm()) {
+            return;
+        }
+
         var movieDTO = {};
 
         //Set con valores default
@@ -119,7 +161,15 @@ function MovieViewController() {
         var ca = new ControlActions();
         var urlEndpoint = this.API_ControllerName + "/Create";
 
+        var vc = this;
+
         ca.PostToAPI(urlEndpoint, movieDTO, function (response) {
+
+            Swal.fire({
+                icon: 'success',
+                title: '¡Película creada!',
+                text: 'La película se registró correctamente.'
+            });
 
             //Recargar la tabla
             $('#tblMovies').DataTable().ajax.reload();
@@ -130,6 +180,11 @@ function MovieViewController() {
     }
 
     this.Update = function () {
+
+        if (!this.ValidateForm()) {
+            return;
+        }
+
         var movieDTO = {};
 
         //Set con valores default
@@ -150,7 +205,15 @@ function MovieViewController() {
         var ca = new ControlActions();
         var urlEndpoint = this.API_ControllerName + "/Update";
 
+        var vc = this;
+
         ca.PutToAPI(urlEndpoint, movieDTO, function (response) {
+
+            Swal.fire({
+                icon: 'success',
+                title: '¡Película actualizada!',
+                text: 'Los datos de la película fueron actualizados correctamente.'
+            });
 
             //Recargar la tabla
             $('#tblMovies').DataTable().ajax.reload();
@@ -181,7 +244,15 @@ function MovieViewController() {
         var ca = new ControlActions();
         var urlEndpoint = this.API_ControllerName + "/Delete";
 
+        var vc = this;
+
         ca.DeleteToAPI(urlEndpoint, movieDTO, function (response) {
+
+            Swal.fire({
+                icon: 'success',
+                title: '¡Película eliminada!',
+                text: 'La película fue eliminada correctamente.'
+            });
 
             //Recargar la tabla
             $('#tblMovies').DataTable().ajax.reload();

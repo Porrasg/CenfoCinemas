@@ -88,16 +88,55 @@ function TicketViewController() {
     // Limpiar el formulario
     this.ClearForm = function () {
         $('#txtId').val('');
-        $('#txtTitle').val('');
-        $('#txtSinopsis').val('');
-        $('#txtGenre').val('');
-        $('#txtDuration').val('');
-        $('#txtClassification').val('');
-        $('#txtImage').val('');
+        $('#txtPrice').val('');
+        $('#txtSchedule').val('');
+        $('#txtDate').val('');
+        $('#txtType').val('');
+        $('#txtMovieId').val('');
         $('#txtStatus').val('');
     }
 
+    this.ValidateForm = function () {
+
+        if (
+            $('#txtPrice').val().trim() === "" ||
+            $('#txtSchedule').val().trim() === "" ||
+            $('#txtDate').val().trim() === "" ||
+            $('#txtType').val().trim() === "" ||
+            $('#txtMovieId').val().trim() === "" ||
+            $('#txtStatus').val().trim() === ""
+        ) {
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campos obligatorios',
+                text: 'Todos los campos son obligatorios.'
+            });
+
+            return false;
+        }
+
+        if (parseFloat($('#txtPrice').val()) <= 0) {
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Precio inválido',
+                text: 'El precio debe ser mayor que cero.'
+            });
+
+            return false;
+        }
+
+        return true;
+    }
+
+
     this.Create = function () {
+
+        if (!this.ValidateForm()) {
+            return;
+        }
+
         var ticketDTO = {};
 
         //Set con valores default
@@ -117,7 +156,16 @@ function TicketViewController() {
         var ca = new ControlActions();
         var urlEndpoint = this.API_ControllerName + "/Create";
 
+        var vc = this;
+
         ca.PostToAPI(urlEndpoint, ticketDTO, function (response) {
+
+            Swal.fire({
+                icon: 'success',
+                title: '¡Tiquete creado!',
+                text: 'El tiquete se registró correctamente.'
+            });
+
             //Recargar la tabla
             $('#tblTickets').DataTable().ajax.reload();
 
@@ -127,6 +175,11 @@ function TicketViewController() {
     }
 
     this.Update = function () {
+
+        if (!this.ValidateForm()) {
+            return;
+        }
+
         var ticketDTO = {};
 
         //Set con valores default
@@ -146,7 +199,16 @@ function TicketViewController() {
         var ca = new ControlActions();
         var urlEndpoint = this.API_ControllerName + "/Update";
 
+        var vc = this;
+
         ca.PutToAPI(urlEndpoint, ticketDTO, function (response) {
+
+            Swal.fire({
+                icon: 'success',
+                title: '¡Tiquete actualizado!',
+                text: 'Los datos del tiquete fueron actualizados correctamente.'
+            });
+
             //Recargar la tabla
             $('#tblTickets').DataTable().ajax.reload();
 
@@ -175,7 +237,16 @@ function TicketViewController() {
         var ca = new ControlActions();
         var urlEndpoint = this.API_ControllerName + "/Delete";
 
+        var vc = this;
+
         ca.DeleteToAPI(urlEndpoint, ticketDTO, function (response) {
+
+            Swal.fire({
+                icon: 'success',
+                title: '¡Tiquete eliminado!',
+                text: 'El tiquete fue eliminado correctamente.'
+            });
+
             //Recargar la tabla
             $('#tblTickets').DataTable().ajax.reload();
 
